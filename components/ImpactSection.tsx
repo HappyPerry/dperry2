@@ -38,14 +38,28 @@ function AnimatedCounter({ target, suffix = "", prefix = "" }: { target: number;
   );
 }
 
-const metrics = [
-  { target: 500, suffix: "+", label: "Youth Impacted", description: "Through camps, programs, and community events" },
-  { target: 15, suffix: "", label: "Scholarships Awarded", description: "Supporting student-athletes and creatives" },
-  { target: 200, suffix: "+", label: "Bikes Donated", description: "Holiday bike drives in Miami communities" },
-  { target: 10, suffix: "+", label: "Community Events", description: "Annual camps, drives, and memorial gatherings" },
+interface MetricData {
+  _id: string;
+  label: string;
+  value: number;
+  suffix?: string;
+  description?: string;
+}
+
+interface ImpactSectionProps {
+  data?: MetricData[] | null;
+}
+
+const fallbackMetrics: MetricData[] = [
+  { _id: "1", value: 500, suffix: "+", label: "Youth Impacted", description: "Through camps, programs, and community events" },
+  { _id: "2", value: 15, suffix: "", label: "Scholarships Awarded", description: "Supporting student-athletes and creatives" },
+  { _id: "3", value: 200, suffix: "+", label: "Bikes Donated", description: "Holiday bike drives in Miami communities" },
+  { _id: "4", value: 10, suffix: "+", label: "Community Events", description: "Annual camps, drives, and memorial gatherings" },
 ];
 
-export default function ImpactSection() {
+export default function ImpactSection({ data }: ImpactSectionProps) {
+  const metrics = data && data.length > 0 ? data : fallbackMetrics;
+
   return (
     <section id="impact" className="relative section-padding overflow-hidden">
       {/* Background */}
@@ -80,11 +94,11 @@ export default function ImpactSection() {
         {/* Metrics Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
           {metrics.map((metric, i) => (
-            <ScrollReveal key={metric.label} delay={0.1 + i * 0.1}>
+            <ScrollReveal key={metric._id} delay={0.1 + i * 0.1}>
               <div className="text-center group p-6 rounded-sm glass hover:bg-white/[0.06] transition-all duration-500">
                 <AnimatedCounter
-                  target={metric.target}
-                  suffix={metric.suffix}
+                  target={metric.value}
+                  suffix={metric.suffix || ""}
                 />
                 <h3 className="text-white font-semibold text-sm tracking-wider uppercase mt-4 mb-2">
                   {metric.label}

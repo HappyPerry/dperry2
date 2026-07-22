@@ -2,7 +2,18 @@
 
 import ScrollReveal from "./ScrollReveal";
 
-const memories = [
+export interface LegacyTribute {
+  _id?: string;
+  quote: string;
+  author: string;
+  role: string;
+}
+
+interface LegacyWallProps {
+  data?: LegacyTribute[] | null;
+}
+
+const defaultMemories: LegacyTribute[] = [
   {
     quote:
       "D'Sean had this way of lighting up every room he walked into. His smile was contagious, his laugh was infectious, and his heart was bigger than anyone I've ever known.",
@@ -41,7 +52,9 @@ const memories = [
   },
 ];
 
-export default function LegacyWall() {
+export default function LegacyWall({ data }: LegacyWallProps) {
+  const memoriesList = data && data.length > 0 ? data : defaultMemories;
+
   return (
     <section id="legacy" className="relative section-padding overflow-hidden bg-navy-900">
       {/* Subtle background glow */}
@@ -72,8 +85,8 @@ export default function LegacyWall() {
 
         {/* Quotes Grid - Masonry-style */}
         <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-          {memories.map((memory, i) => (
-            <ScrollReveal key={i} delay={0.05 * i} direction="none">
+          {memoriesList.map((memory, i) => (
+            <ScrollReveal key={memory._id || i} delay={0.05 * i} direction="none">
               <div className="break-inside-avoid glass rounded-sm p-6 lg:p-8 hover:bg-white/[0.06] transition-all duration-500 group">
                 {/* Quote mark */}
                 <span className="font-serif text-5xl text-uva-orange/20 leading-none block mb-2">
@@ -89,7 +102,7 @@ export default function LegacyWall() {
                 <div className="flex items-center gap-3 pt-4 border-t border-white/5">
                   <div className="w-8 h-8 bg-uva-orange/10 rounded-full flex items-center justify-center">
                     <span className="text-uva-orange text-xs font-semibold">
-                      {memory.author[0]}
+                      {memory.author?.[0] ?? "P"}
                     </span>
                   </div>
                   <div>

@@ -2,7 +2,50 @@
 
 import ScrollReveal from "./ScrollReveal";
 
-export default function ScholarshipSection() {
+export interface ScholarshipData {
+  eyebrow?: string;
+  headlineLine1?: string;
+  headlineLine2?: string;
+  bikeDriveBadge?: string;
+  bikeDriveTitle?: string;
+  bikeDriveDescription?: string;
+  scholarshipBadge?: string;
+  scholarshipTitle?: string;
+  scholarshipDescription?: string;
+  criteriaList?: string[];
+}
+
+interface ScholarshipSectionProps {
+  data?: ScholarshipData | null;
+}
+
+export default function ScholarshipSection({ data }: ScholarshipSectionProps) {
+  const eyebrow = data?.eyebrow ?? "Our Initiatives";
+  const headlineLine1 = data?.headlineLine1 ?? "Investing in";
+  const headlineLine2 = data?.headlineLine2 ?? "Tomorrow's Leaders";
+
+  const bikeDriveBadge = data?.bikeDriveBadge ?? "Annual Signature Initiative";
+  const bikeDriveTitle = data?.bikeDriveTitle ?? "D'Sean Perry's Annual Bike Drive";
+  const bikeDriveDescription =
+    data?.bikeDriveDescription ??
+    "Fulfilling D'Sean's personal dream of giving back to his community, the annual D'Sean Emir Perry Bike Drive provides hundreds of bicycles, helmets, and locks to local children every December. Hosted at the Second Baptist Church in Richmond Heights (Miami, FL), this signature event continues D'Sean's legacy of spreading joy, community safety, and opportunities for young kids.";
+
+  const scholarshipBadge = data?.scholarshipBadge ?? "Educational Empowerment";
+  const scholarshipTitle =
+    data?.scholarshipTitle ?? "The D'Sean Perry Memorial Scholarship";
+  const scholarshipDescription =
+    data?.scholarshipDescription ??
+    "Supporting student-athletes who excel both academically and athletically, honoring D'Sean's dual passions for the game and the arts. Recipients are selected for their character, leadership, and commitment to community.";
+
+  const criteriaList = data?.criteriaList && data.criteriaList.length > 0
+    ? data.criteriaList
+    : [
+        "Academic achievement",
+        "Athletic dedication",
+        "Community leadership",
+        "Creative expression",
+      ];
+
   return (
     <section id="initiatives" className="relative section-padding overflow-hidden bg-navy-900">
       {/* Decorative background */}
@@ -16,14 +59,14 @@ export default function ScholarshipSection() {
         <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-24">
           <ScrollReveal>
             <span className="text-uva-orange/80 text-xs tracking-[0.3em] uppercase mb-4 block">
-              Our Initiatives
+              {eyebrow}
             </span>
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
             <h2 className="headline-lg text-4xl sm:text-5xl lg:text-6xl text-white mb-8">
-              Investing in
-              <span className="block text-uva-orange mt-1">Tomorrow&apos;s Leaders</span>
+              {headlineLine1}
+              <span className="block text-uva-orange mt-1">{headlineLine2}</span>
             </h2>
           </ScrollReveal>
         </div>
@@ -47,39 +90,28 @@ export default function ScholarshipSection() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 >
-                  {/* Wheels */}
                   <circle cx="5.5" cy="17.5" r="3" />
                   <circle cx="18.5" cy="17.5" r="3" />
-                  
-                  {/* Seat / Saddle */}
                   <path d="M7.5 9h3" />
                   <path d="M9 9v2.5" />
-                  
-                  {/* Frame Stays */}
-                  <path d="M5.5 17.5L9 11.5" /> {/* Seat stay */}
-                  <path d="M5.5 17.5h5.5" /> {/* Chain stay */}
-                  
-                  {/* Main Frame Triangle */}
+                  <path d="M5.5 17.5L9 11.5" />
+                  <path d="M5.5 17.5h5.5" />
                   <path d="M9 11.5h6l-4 6z" />
-                  
-                  {/* Handlebars */}
-                  <path d="M15 11.5l1.5-3.5" /> {/* Stem */}
-                  <path d="M15 8h2.5" /> {/* Handlebar */}
-                  
-                  {/* Front Fork */}
+                  <path d="M15 11.5l1.5-3.5" />
+                  <path d="M15 8h2.5" />
                   <path d="M18.5 17.5L16.5 11.5" />
                 </svg>
               </div>
             </div>
 
             <span className="text-uva-orange text-xs font-semibold tracking-widest uppercase block mb-2">
-              Annual Signature Initiative
+              {bikeDriveBadge}
             </span>
             <h3 className="font-serif text-3xl sm:text-4xl text-white mb-6">
-              D&apos;Sean Perry&apos;s Annual Bike Drive
+              {bikeDriveTitle}
             </h3>
             <p className="text-white/70 max-w-3xl mx-auto leading-relaxed mb-8 text-base">
-              Fulfilling D&apos;Sean&apos;s personal dream of giving back to his community, the annual D&apos;Sean Emir Perry Bike Drive provides hundreds of bicycles, helmets, and locks to local children every December. Hosted at the Second Baptist Church in Richmond Heights (Miami, FL), this signature event continues D&apos;Sean&apos;s legacy of spreading joy, community safety, and opportunities for young kids.
+              {bikeDriveDescription}
             </p>
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-2xl mx-auto border-t border-white/10 pt-8 text-left">
@@ -104,18 +136,16 @@ export default function ScholarshipSection() {
           <ScrollReveal delay={0.3} direction="left">
             <div className="glass rounded-sm p-8 lg:p-10 group hover:bg-white/[0.08] transition-all duration-500">
               <div className="text-uva-orange/60 text-xs tracking-[0.3em] uppercase mb-4">
-                Academic Excellence
+                {scholarshipBadge}
               </div>
               <h3 className="font-serif text-2xl text-white mb-4">
-                Student-Athlete Scholarships
+                {scholarshipTitle}
               </h3>
               <p className="text-white/60 leading-relaxed mb-6">
-                Supporting student-athletes who excel both academically and athletically, 
-                honoring D&apos;Sean&apos;s dual passions for the game and the arts. Recipients 
-                are selected for their character, leadership, and commitment to community.
+                {scholarshipDescription}
               </p>
               <ul className="space-y-3">
-                {["Academic achievement", "Athletic dedication", "Community leadership", "Creative expression"].map((item) => (
+                {criteriaList.map((item) => (
                   <li key={item} className="flex items-center gap-3 text-white/50 text-sm">
                     <span className="w-1.5 h-1.5 bg-uva-orange/60 rounded-full flex-shrink-0" />
                     {item}
@@ -134,8 +164,8 @@ export default function ScholarshipSection() {
                 Youth Development Grants
               </h3>
               <p className="text-white/60 leading-relaxed mb-6">
-                Funding youth football camps, art workshops, and mentorship programs 
-                in Miami and Charlottesville — creating opportunities for young people 
+                Funding youth football camps, art workshops, and mentorship programs
+                in Miami and Charlottesville — creating opportunities for young people
                 to discover their potential, just as D&apos;Sean did.
               </p>
               <ul className="space-y-3">

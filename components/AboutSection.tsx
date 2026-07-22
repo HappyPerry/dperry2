@@ -2,7 +2,44 @@
 
 import ScrollReveal from "./ScrollReveal";
 
-export default function AboutSection() {
+export interface AboutData {
+  eyebrow?: string;
+  headline?: string;
+  headlineAccent?: string;
+  paragraph1?: string;
+  paragraph2?: string;
+  essayQuote?: string;
+  essayQuoteSource?: string;
+  parentsTribute?: string;
+  coachTribute?: string;
+}
+
+interface AboutSectionProps {
+  data?: AboutData | null;
+}
+
+export default function AboutSection({ data }: AboutSectionProps) {
+  const eyebrow = data?.eyebrow ?? "About D'Sean";
+  const headline = data?.headline ?? "More Than an";
+  const headlineAccent = data?.headlineAccent ?? "Athlete";
+  const paragraph1 =
+    data?.paragraph1 ??
+    "Born and raised in Miami, Florida, D'Sean Perry was a force of nature — on the field, in the studio, and in every life he touched. A standout at Gulliver Preparatory Academy, he earned the South Florida Conference's 2018 Defensive Player of the Year with 199 career tackles and 15 sacks.";
+  const paragraph2 =
+    data?.paragraph2 ??
+    "At the University of Virginia, D'Sean wore #41 with pride as a linebacker and defensive end. A Studio Art major, D'Sean filled sketchbooks since childhood, earned awards for his ceramics, and created sculptures that blended mythology with self-expression.";
+  const essayQuote =
+    data?.essayQuote ??
+    "Whatever I do in the future, I will make sure that whoever has helped me become successful will receive something in return. All I want to do is make my family and the city I'm from proud.";
+  const essayQuoteSource =
+    data?.essayQuoteSource ?? "D'Sean Perry, High School English Essay";
+  const parentsTribute =
+    data?.parentsTribute ??
+    "D'Sean was a loving, giving, caring, God-fearing young man who made his family proud. Football and art was his passion, but the love that he had for his family, friends, and community was proven time and time again...";
+  const coachTribute =
+    data?.coachTribute ??
+    "D'Sean was a delightful, respectful, hard-working person who was one of the best overall young men our communities had to offer. He had a fierce competitive nature, but he was kind and had a strong faith.";
+
   return (
     <section id="about" className="relative bg-navy-900 section-padding overflow-hidden">
       {/* Subtle background accent */}
@@ -29,13 +66,11 @@ export default function AboutSection() {
                 <h3 className="font-serif text-white text-2xl mb-4 italic">
                   &ldquo;Bigger Than Me&rdquo;
                 </h3>
-                
+
                 <div className="space-y-4 font-serif text-white/80 text-sm leading-relaxed border-l-2 border-uva-orange/60 pl-4 py-1 italic">
-                  <p>
-                    &ldquo;Whatever I do in the future, I will make sure that whoever has helped me become successful will receive something in return. All I want to do is make my family and the city I&apos;m from proud.&rdquo;
-                  </p>
+                  <p>&ldquo;{essayQuote}&rdquo;</p>
                   <p className="text-white/60 text-xs mt-2 not-italic">
-                    &mdash; D&apos;Sean Perry, High School English Essay
+                    &mdash; {essayQuoteSource}
                   </p>
                 </div>
 
@@ -54,21 +89,17 @@ export default function AboutSection() {
                 <span className="text-uva-orange/80 text-xs font-semibold tracking-widest uppercase block mb-3">
                   A Beautiful Soul
                 </span>
-                
+
                 <div className="space-y-4 text-xs sm:text-sm text-white/70">
                   <blockquote className="border-l border-white/10 pl-3">
-                    <p className="italic">
-                      &ldquo;D&apos;Sean was a loving, giving, caring, God-fearing young man who made his family proud. Football and art was his passion, but the love that he had for his family, friends, and community was proven time and time again...&rdquo;
-                    </p>
+                    <p className="italic">&ldquo;{parentsTribute}&rdquo;</p>
                     <cite className="block text-white/50 text-[11px] not-italic mt-1.5 font-sans">
                       &mdash; Sean & Happy Perry, Parents
                     </cite>
                   </blockquote>
 
                   <blockquote className="border-l border-white/10 pl-3">
-                    <p className="italic">
-                      &ldquo;D&apos;Sean was a delightful, respectful, hard-working person who was one of the best overall young men our communities had to offer. He had a fierce competitive nature, but he was kind and had a strong faith.&rdquo;
-                    </p>
+                    <p className="italic">&ldquo;{coachTribute}&rdquo;</p>
                     <cite className="block text-white/50 text-[11px] not-italic mt-1.5 font-sans">
                       &mdash; Earl Sims, Jr., High School Football Coach
                     </cite>
@@ -82,37 +113,21 @@ export default function AboutSection() {
           <div>
             <ScrollReveal delay={0.1}>
               <span className="text-uva-orange/80 text-xs tracking-[0.3em] uppercase mb-4 block">
-                About D&apos;Sean
+                {eyebrow}
               </span>
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
               <h2 className="headline-lg text-4xl sm:text-5xl lg:text-6xl text-white mb-8">
-                More Than an
-                <span className="block text-uva-orange mt-1">Athlete</span>
+                {headline}
+                <span className="block text-uva-orange mt-1">{headlineAccent}</span>
               </h2>
             </ScrollReveal>
 
             <ScrollReveal delay={0.3}>
               <div className="space-y-6 body-lg text-white/70">
-                <p>
-                  Born and raised in Miami, Florida, D&apos;Sean Perry was a force of nature — 
-                  on the field, in the studio, and in every life he touched. A standout at 
-                  Gulliver Preparatory Academy, he earned the South Florida Conference&apos;s 
-                  2018 Defensive Player of the Year with 199 career tackles and 15 sacks.
-                </p>
-                <p>
-                  At the University of Virginia, D&apos;Sean wore #41 with pride as a linebacker 
-                  and defensive end. In his 2020 debut, he returned an interception 84 yards 
-                  for a touchdown — the second-longest return by a linebacker in program history. 
-                  But his impact extended far beyond the field.
-                </p>
-                <p>
-                  A Studio Art major, D&apos;Sean filled sketchbooks since childhood, earned awards 
-                  for his ceramics, and created sculptures that blended mythology with self-expression. 
-                  He played piano and guitar, wrote poetry, and carried a warmth that made everyone 
-                  around him feel seen.
-                </p>
+                <p>{paragraph1}</p>
+                <p>{paragraph2}</p>
               </div>
             </ScrollReveal>
 

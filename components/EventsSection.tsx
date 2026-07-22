@@ -2,16 +2,31 @@
 
 import ScrollReveal from "./ScrollReveal";
 
-const events = [
+interface EventData {
+  _id: string;
+  title: string;
+  date: string;
+  location?: string;
+  description?: string;
+  type?: string;
+}
+
+interface EventsSectionProps {
+  data?: EventData[] | null;
+}
+
+const fallbackEvents: EventData[] = [
   {
+    _id: "1",
     date: "December 2024",
     title: "Annual Holiday Bike Drive",
     location: "Miami, Florida",
     description:
-      "Providing bicycles to children in need during the holiday season — continuing D'Sean's tradition of giving back to the Miami community.",
+      "Providing bicycles to children in need during the holiday season \u2014 continuing D\u2019Sean\u2019s tradition of giving back to the Miami community.",
     type: "Community",
   },
   {
+    _id: "2",
     date: "Summer 2024",
     title: "Youth Football Camp",
     location: "Miami, Florida",
@@ -20,19 +35,21 @@ const events = [
     type: "Athletics",
   },
   {
+    _id: "3",
     date: "November 2024",
     title: "Memorial Remembrance",
     location: "Charlottesville, Virginia",
     description:
-      "Annual gathering to honor and celebrate the lives of D'Sean, Lavel, and Devin. A time for healing, community, and remembrance.",
+      "Annual gathering to honor and celebrate the lives of D\u2019Sean, Lavel, and Devin. A time for healing, community, and remembrance.",
     type: "Memorial",
   },
   {
+    _id: "4",
     date: "Spring 2025",
     title: "Art & Athletics Exhibition",
     location: "University of Virginia",
     description:
-      "Showcasing D'Sean's artwork alongside youth creations, celebrating the intersection of athletic excellence and artistic expression.",
+      "Showcasing D\u2019Sean\u2019s artwork alongside youth creations, celebrating the intersection of athletic excellence and artistic expression.",
     type: "Arts",
   },
 ];
@@ -44,7 +61,9 @@ const typeColors: Record<string, string> = {
   Arts: "bg-uva-blue/40 text-white/80",
 };
 
-export default function EventsSection() {
+export default function EventsSection({ data }: EventsSectionProps) {
+  const events = data && data.length > 0 ? data : fallbackEvents;
+
   return (
     <section id="events" className="relative section-padding overflow-hidden bg-cream">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
@@ -79,7 +98,7 @@ export default function EventsSection() {
           <div className="space-y-8 lg:space-y-12">
             {events.map((event, i) => (
               <ScrollReveal
-                key={event.title}
+                key={event._id}
                 delay={0.1 + i * 0.1}
                 direction={i % 2 === 0 ? "left" : "right"}
               >
@@ -98,7 +117,7 @@ export default function EventsSection() {
                   <div className="sm:pl-12 md:pl-0 md:w-1/2">
                     <div className={`bg-white rounded-sm p-6 lg:p-8 shadow-sm hover:shadow-lg transition-all duration-500 border border-black/[0.04] ${i % 2 === 0 ? 'md:mr-8' : 'md:ml-8'}`}>
                       <div className="flex items-center gap-3 mb-4">
-                        <span className={`text-[10px] tracking-[0.15em] uppercase px-3 py-1 rounded-full ${typeColors[event.type]}`}>
+                        <span className={`text-[10px] tracking-[0.15em] uppercase px-3 py-1 rounded-full ${typeColors[event.type || "Community"]}`}>
                           {event.type}
                         </span>
                         <span className="text-text-muted text-sm">{event.date}</span>
@@ -106,13 +125,15 @@ export default function EventsSection() {
                       <h3 className="font-serif text-xl text-text-primary font-semibold mb-2">
                         {event.title}
                       </h3>
-                      <p className="text-text-muted text-sm mb-3 flex items-center gap-1.5">
-                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                        </svg>
-                        {event.location}
-                      </p>
+                      {event.location && (
+                        <p className="text-text-muted text-sm mb-3 flex items-center gap-1.5">
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                          </svg>
+                          {event.location}
+                        </p>
+                      )}
                       <p className="text-text-muted leading-relaxed text-sm">
                         {event.description}
                       </p>

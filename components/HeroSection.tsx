@@ -2,8 +2,47 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { urlForImage } from "@/sanity/lib/image";
 
-export default function HeroSection() {
+
+interface HeroData {
+  eyebrow?: string;
+  headlineLine1?: string;
+  headlineLine2?: string;
+  headlineLine3?: string;
+  subtitle?: string;
+  ctaPrimaryText?: string;
+  ctaPrimaryLink?: string;
+  ctaSecondaryText?: string;
+  ctaSecondaryLink?: string;
+  sideQuote?: string;
+  heroImage?: Parameters<typeof urlForImage>[0];
+}
+
+interface HeroSectionProps {
+  data?: HeroData | null;
+}
+
+export default function HeroSection({ data }: HeroSectionProps) {
+  const eyebrow = data?.eyebrow ?? "University of Virginia \u2022 #41";
+  const headlineLine1 = data?.headlineLine1 ?? "The";
+  const headlineLine2 = data?.headlineLine2 ?? "D\u2019Sean Perry";
+  const headlineLine3 = data?.headlineLine3 ?? "Foundation";
+  const subtitle =
+    data?.subtitle ??
+    "Honoring a life of leadership, love, artistic expression, and athletic dedication.";
+  const ctaPrimaryText = data?.ctaPrimaryText ?? "Honor His Legacy";
+  const ctaPrimaryLink = data?.ctaPrimaryLink ?? "#about";
+  const ctaSecondaryText = data?.ctaSecondaryText ?? "Support the Foundation";
+  const ctaSecondaryLink = data?.ctaSecondaryLink ?? "#donate";
+  const sideQuote =
+    data?.sideQuote ??
+    "D\u2019Sean\u2019s legacy lives on \u2014 a force of positivity, artistic creation, and community empowerment for young athletes.";
+
+  const heroImageUrl = data?.heroImage
+    ? urlForImage(data.heroImage)?.width(1200).url()
+    : "/images/dsean-perry.png";
+
   return (
     <section
       id="hero"
@@ -25,7 +64,7 @@ export default function HeroSection() {
         
         <div className="relative w-full h-full max-w-lg lg:max-w-none opacity-30 lg:opacity-100 transition-opacity duration-700">
           <Image
-            src="/images/dsean-perry.png"
+            src={heroImageUrl!}
             alt="D'Sean Perry"
             fill
             priority
@@ -48,7 +87,7 @@ export default function HeroSection() {
           >
             <span className="inline-flex items-center gap-3 text-uva-orange text-xs font-semibold tracking-[0.3em] uppercase">
               <span className="w-6 h-px bg-uva-orange/45" />
-              University of Virginia &bull; #41
+              {eyebrow}
             </span>
           </motion.div>
 
@@ -59,7 +98,9 @@ export default function HeroSection() {
             transition={{ duration: 1, delay: 0.4 }}
             className="font-serif text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight mb-6"
           >
-            The <span className="block text-white">D&apos;Sean Perry</span> <span className="block text-uva-orange">Foundation</span>
+            {headlineLine1}{" "}
+            <span className="block text-white">{headlineLine2}</span>{" "}
+            <span className="block text-uva-orange">{headlineLine3}</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -69,7 +110,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="font-serif text-lg sm:text-xl text-white/70 italic mb-10 max-w-xl leading-relaxed"
           >
-            Honoring a life of leadership, love, artistic expression, and athletic dedication.
+            {subtitle}
           </motion.p>
 
           {/* CTAs */}
@@ -79,11 +120,11 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="flex flex-col sm:flex-row gap-4 items-start sm:items-center"
           >
-            <a href="#about" className="btn-primary w-full sm:w-auto px-8 py-4 text-center">
-              <span>Honor His Legacy</span>
+            <a href={ctaPrimaryLink} className="btn-primary w-full sm:w-auto px-8 py-4 text-center">
+              <span>{ctaPrimaryText}</span>
             </a>
-            <a href="#donate" className="btn-outline w-full sm:w-auto px-8 py-4 text-center">
-              Support the Foundation
+            <a href={ctaSecondaryLink} className="btn-outline w-full sm:w-auto px-8 py-4 text-center">
+              {ctaSecondaryText}
             </a>
           </motion.div>
         </div>
@@ -97,7 +138,7 @@ export default function HeroSection() {
             className="max-w-xs text-right bg-navy-950/40 backdrop-blur-sm p-6 border-r-2 border-uva-orange"
           >
             <p className="font-serif text-white/80 text-sm leading-relaxed italic">
-              &ldquo;D&apos;Sean&apos;s legacy lives on &mdash; a force of positivity, artistic creation, and community empowerment for young athletes.&rdquo;
+              &ldquo;{sideQuote}&rdquo;
             </p>
           </motion.div>
         </div>
