@@ -3,4 +3,5 @@ export const apiVersion =
 
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 
-export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "placeholder";
+const rawProjectId = (process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "").trim();
+export const projectId = /^[a-z0-9-]+$/.test(rawProjectId) ? rawProjectId : "placeholder";
