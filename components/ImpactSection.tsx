@@ -1,40 +1,12 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { motion, useInView } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 
 function AnimatedCounter({ target, suffix = "", prefix = "" }: { target: number; suffix?: string; prefix?: string }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!isInView) return;
-
-    const duration = 2000;
-    const startTime = Date.now();
-
-    const timer = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      // Ease out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.floor(eased * target));
-
-      if (progress >= 1) clearInterval(timer);
-    }, 16);
-
-    return () => clearInterval(timer);
-  }, [isInView, target]);
-
   return (
-    <motion.span
-      ref={ref}
-      className="font-serif text-5xl sm:text-6xl md:text-7xl font-bold text-uva-orange leading-none block"
-    >
-      {prefix}{count.toLocaleString()}{suffix}
-    </motion.span>
+    <span className="font-serif text-5xl sm:text-6xl md:text-7xl font-bold text-uva-orange leading-none block">
+      {prefix}{target.toLocaleString()}{suffix}
+    </span>
   );
 }
 

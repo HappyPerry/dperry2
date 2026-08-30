@@ -21,9 +21,25 @@ interface HeroData {
 
 interface HeroSectionProps {
   data?: HeroData | null;
+  jerseyUrl?: string | null;
 }
 
-export default function HeroSection({ data }: HeroSectionProps) {
+const DEFAULT_JERSEY_URL =
+  "https://www.uvabookstores.com/NIke-Custom-Orange-Jersey?quantity=1&footballplayername=95";
+
+function TwoLineLabel({ text }: { text: string }) {
+  const words = text.trim().split(/\s+/);
+  const secondLine = words.pop();
+
+  return (
+    <span className="leading-relaxed">
+      <span className="block whitespace-nowrap">{words.join(" ")}</span>
+      <span className="block whitespace-nowrap">{secondLine}</span>
+    </span>
+  );
+}
+
+export default function HeroSection({ data, jerseyUrl }: HeroSectionProps) {
   const eyebrow = data?.eyebrow ?? "University of Virginia \u2022 #41";
   const headlineLine1 = data?.headlineLine1 ?? "The";
   const headlineLine2 = data?.headlineLine2 ?? "D\u2019Sean Perry";
@@ -80,7 +96,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
         <div className="max-w-2xl lg:max-w-none text-left flex flex-col justify-center py-12">
           {/* Eyebrow */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-6"
@@ -93,7 +109,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
 
           {/* Headline */}
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
             className="font-serif text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight mb-6"
@@ -105,7 +121,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
 
           {/* Subtitle */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             className="font-serif text-lg sm:text-xl text-white/70 italic mb-10 max-w-xl leading-relaxed"
@@ -115,16 +131,27 @@ export default function HeroSection({ data }: HeroSectionProps) {
 
           {/* CTAs */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 items-start sm:items-center"
+            className="grid w-full grid-cols-1 gap-4 sm:grid-cols-3"
           >
-            <a href={ctaPrimaryLink} className="btn-primary w-full sm:w-auto px-8 py-4 text-center">
-              <span>{ctaPrimaryText}</span>
+            <a href={ctaPrimaryLink} className="btn-primary min-h-20 w-full px-4 py-3 text-center">
+              <TwoLineLabel text={ctaPrimaryText} />
             </a>
-            <a href={ctaSecondaryLink} className="btn-outline w-full sm:w-auto px-8 py-4 text-center">
-              {ctaSecondaryText}
+            <a href={ctaSecondaryLink} className="btn-outline min-h-20 w-full px-4 py-3 text-center">
+              <TwoLineLabel text={ctaSecondaryText} />
+            </a>
+            <a
+              href={jerseyUrl || DEFAULT_JERSEY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-20 w-full items-center justify-center border-2 border-uva-orange bg-uva-orange/10 px-4 py-3 text-center text-uva-orange text-xs font-semibold tracking-[0.12em] uppercase shadow-lg shadow-uva-orange/10 transition-all duration-300 hover:bg-uva-orange hover:text-white hover:shadow-uva-orange/30"
+            >
+              <span className="leading-relaxed">
+                <span className="block whitespace-nowrap">Buy D’Sean’s</span>
+                <span className="block whitespace-nowrap">Jersey ↗</span>
+              </span>
             </a>
           </motion.div>
         </div>
@@ -132,7 +159,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
         {/* Right Side Tagline overlay - Desktop only */}
         <div className="hidden lg:flex justify-end items-start h-full pt-12 relative z-20">
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={false}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 1 }}
             className="max-w-xs text-right bg-navy-950/40 backdrop-blur-sm p-6 border-r-2 border-uva-orange"
@@ -146,7 +173,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
 
       {/* Scroll Indicator */}
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
         className="absolute bottom-8 left-6 lg:left-8 z-10 flex items-center gap-4"

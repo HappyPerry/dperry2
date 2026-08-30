@@ -16,6 +16,20 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Sanity inquiry storage
+
+The Get Involved form stores submissions as `inquiry` documents in Sanity. To enable writes:
+
+1. Open the project at [sanity.io/manage](https://www.sanity.io/manage).
+2. Go to **API > Tokens** and create a token with **Editor** permissions.
+3. Add the token locally and in the production host as a server-only environment variable:
+
+```bash
+SANITY_API_WRITE_TOKEN=your_editor_token
+```
+
+Never prefix this token with `NEXT_PUBLIC_` and never commit its value. Restart the development server after adding it. Foundation staff can review submissions under **Inquiries** at `/admin`, update follow-up status, and add internal notes.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

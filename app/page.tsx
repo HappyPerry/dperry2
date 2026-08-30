@@ -106,7 +106,7 @@ export default async function Home() {
   return (
     <main>
       <Navbar />
-      <HeroSection data={heroData} />
+      <HeroSection data={heroData} jerseyUrl={siteSettings?.jerseyUrl} />
       <AboutSection data={aboutData} />
       <MissionSection data={missionData} />
       <ScholarshipSection data={scholarshipData} />

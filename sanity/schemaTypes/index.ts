@@ -7,6 +7,7 @@ import scholarshipSection from "./scholarshipSection";
 import legacyWallTribute from "./legacyWallTribute";
 import event from "./event";
 import impactMetric from "./impactMetric";
+import inquiry from "./inquiry";
 
 export const schemaTypes = [
   siteSettings,
@@ -18,4 +19,5 @@ export const schemaTypes = [
   event,
   impactMetric,
   legacyWallTribute,
+  inquiry,
 ];

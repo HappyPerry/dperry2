@@ -127,7 +127,7 @@ export default function Footer({ siteSettings }: FooterProps) {
               {[
                 { href: "#donate", label: "Donate via Venmo", external: false },
                 { href: jerseyUrl, label: "Order #41 Jersey", external: true },
-                { href: `mailto:${contactEmail}`, label: "Volunteer & Partner", external: false },
+                { href: "/get-involved", label: "Volunteer & Partner", external: false },
                 { href: "#initiatives", label: "Apply for Scholarship", external: false },
                 { href: "#legacy", label: "Share a Tribute", external: false },
               ].map((link) => (

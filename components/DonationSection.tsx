@@ -17,7 +17,6 @@ interface SiteSettingsData {
   jerseyUrl?: string;
   jerseyTitle?: string;
   jerseyDescription?: string;
-  contactEmail?: string;
   venmoHandle?: string;
 }
 
@@ -28,8 +27,15 @@ interface DonationSectionProps {
 
 export default function DonationSection({ data, siteSettings }: DonationSectionProps) {
   const eyebrow = data?.eyebrow ?? "Support the Mission";
-  const headlineLine1 = data?.headlineLine1 ?? "Continue His";
+  const headlineLine1Base = data?.headlineLine1 ?? "Continue His";
+  const headlineLine1 = /^let(?:'|’)s\b/i.test(headlineLine1Base.trim())
+    ? headlineLine1Base
+    : `Let’s ${headlineLine1Base}`;
   const headlineLine2 = data?.headlineLine2 ?? "Legacy";
+  const headingFirstLine = headlineLine1.replace(/\s+his\s*$/i, "");
+  const headingSecondLine = /^his\b/i.test(headlineLine2.trim())
+    ? headlineLine2
+    : `His ${headlineLine2}`;
   const description =
     data?.description ??
     "Every contribution helps us carry forward D\u2019Sean\u2019s vision \u2014 empowering young athletes, supporting students, and strengthening the communities he loved.";
@@ -42,7 +48,6 @@ export default function DonationSection({ data, siteSettings }: DonationSectionP
   const jerseyDescription =
     siteSettings?.jerseyDescription ??
     "All purchases of the official #41 D\u2019Sean Perry UVA jersey directly benefit the D\u2019Sean Perry Foundation and support our scholarships and youth programs.";
-  const contactEmail = siteSettings?.contactEmail ?? "info@dseanperryfoundation.org";
   const venmoHandle = siteSettings?.venmoHandle ?? "@Happy-Perry-2";
 
   const bgImageUrl = data?.backgroundImage
@@ -73,9 +78,9 @@ export default function DonationSection({ data, siteSettings }: DonationSectionP
         </ScrollReveal>
 
         <ScrollReveal delay={0.1}>
-          <h2 className="headline-xl text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white mb-6">
-            {headlineLine1}
-            <span className="block text-uva-orange">{headlineLine2}</span>
+          <h2 className="headline-xl mx-auto mb-8 max-w-4xl text-center text-4xl text-white sm:text-5xl md:text-6xl lg:text-7xl">
+            <span className="block">{headingFirstLine}</span>
+            <span className="mt-2 block text-uva-orange">{headingSecondLine}</span>
           </h2>
         </ScrollReveal>
 
@@ -149,11 +154,11 @@ export default function DonationSection({ data, siteSettings }: DonationSectionP
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                 </svg>
-                Donate via Venmo
+                Donate
               </span>
             </a>
             <a
-              href={`mailto:${contactEmail}`}
+              href="/get-involved"
               className="btn-outline text-base px-10 py-4"
             >
               Get Involved

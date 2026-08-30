@@ -91,6 +91,18 @@ export default defineConfig({
 
             S.divider(),
 
+            S.listItem()
+              .title("Inquiries")
+              .id("inquiry")
+              .icon(icons.envelope)
+              .child(
+                S.documentTypeList("inquiry")
+                  .title("Inquiries")
+                  .defaultOrdering([{ field: "submittedAt", direction: "desc" }])
+              ),
+
+            S.divider(),
+
             // Dynamic Content Lists
             S.listItem()
               .title("Events")
@@ -120,7 +132,7 @@ export default defineConfig({
             ...S.documentTypeListItems().filter(
               (listItem) =>
                 !singletonTypes.has(listItem.getId()!) &&
-                !["event", "impactMetric", "legacyWallTribute"].includes(
+                !["event", "impactMetric", "legacyWallTribute", "inquiry"].includes(
                   listItem.getId()!
                 )
             ),
