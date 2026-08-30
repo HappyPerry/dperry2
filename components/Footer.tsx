@@ -7,6 +7,7 @@ interface SiteSettingsData {
   instagramUrl?: string;
   facebookUrl?: string;
   twitterUrl?: string;
+  jerseyUrl?: string;
 }
 
 interface FooterProps {
@@ -21,6 +22,9 @@ export default function Footer({ siteSettings }: FooterProps) {
   const instagramUrl = siteSettings?.instagramUrl ?? "#";
   const facebookUrl = siteSettings?.facebookUrl ?? "#";
   const twitterUrl = siteSettings?.twitterUrl ?? "#";
+  const jerseyUrl =
+    siteSettings?.jerseyUrl ??
+    "https://www.uvabookstores.com/NIke-Custom-Orange-Jersey?quantity=1&footballplayername=95";
 
   return (
     <footer className="bg-navy-900 border-t border-white/5">
@@ -121,18 +125,24 @@ export default function Footer({ siteSettings }: FooterProps) {
             </h4>
             <ul className="space-y-3">
               {[
-                { href: "#donate", label: "Donate" },
-                { href: "#", label: "Volunteer" },
-                { href: "#", label: "Sponsor an Event" },
-                { href: "#", label: "Apply for Scholarship" },
-                { href: "#", label: "Share a Memory" },
+                { href: "#donate", label: "Donate via Venmo", external: false },
+                { href: jerseyUrl, label: "Order #41 Jersey", external: true },
+                { href: `mailto:${contactEmail}`, label: "Volunteer & Partner", external: false },
+                { href: "#initiatives", label: "Apply for Scholarship", external: false },
+                { href: "#legacy", label: "Share a Tribute", external: false },
               ].map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-white/40 text-sm hover:text-uva-orange transition-colors duration-300"
+                    {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="text-white/40 text-sm hover:text-uva-orange transition-colors duration-300 inline-flex items-center gap-1.5"
                   >
-                    {link.label}
+                    <span>{link.label}</span>
+                    {link.external && (
+                      <svg className="w-3 h-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                      </svg>
+                    )}
                   </a>
                 </li>
               ))}

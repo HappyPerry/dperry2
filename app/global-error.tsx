@@ -20,12 +20,6 @@ export default function GlobalError({
         >
           Try Again
         </button>
-        <a
-          href="/"
-          className="text-white/50 text-sm hover:text-white/80 transition-colors underline"
-        >
-          Return Home
-        </a>
       </body>
     </html>
   );

@@ -38,6 +38,29 @@ export default defineType({
       initialValue: "https://account.venmo.com/u/dep_0920",
     }),
     defineField({
+      name: "jerseyUrl",
+      title: "Official #41 Jersey Purchase URL",
+      type: "url",
+      initialValue:
+        "https://www.uvabookstores.com/NIke-Custom-Orange-Jersey?quantity=1&footballplayername=95",
+      description:
+        "Direct link to purchase the official Nike #41 D'Sean Perry UVA orange jersey (all purchases benefit the foundation)",
+    }),
+    defineField({
+      name: "jerseyTitle",
+      title: "Jersey Section Title",
+      type: "string",
+      initialValue: "Official #41 Nike Custom Orange Jersey",
+    }),
+    defineField({
+      name: "jerseyDescription",
+      title: "Jersey Section Description",
+      type: "text",
+      rows: 2,
+      initialValue:
+        "All purchases of the official #41 D'Sean Perry UVA jersey directly benefit the D'Sean Perry Foundation and support our scholarships and youth programs.",
+    }),
+    defineField({
       name: "location",
       title: "Location",
       type: "string",
